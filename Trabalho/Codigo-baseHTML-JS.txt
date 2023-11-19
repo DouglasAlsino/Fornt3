@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solicitar Tempo de Gerenciamento</title>
+</head>
+<body>
+    <h1>Solicitar Tempo de Gerenciamento</h1>
+    <form id="requestForm">
+        <label for="employee">Nome do Funcionário:</label>
+        <input type="text" id="employee" name="employee" required>
+        <button type="submit">Solicitar Tempo</button>
+    </form>
+    <p id="message"></p>
+
+    <script>
+        document.getElementById('requestForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const employee = document.getElementById('employee').value;
+            const response = await fetch('/request-time', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ employee })
+            });
+            const data = await response.json();
+            document.getElementById('message').textContent = data.message;
+        });
+    </script>
+</body>
+</html>
